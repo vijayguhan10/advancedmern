@@ -1,7 +1,6 @@
 const rsolvereject = new Promise((resolve, reject) => {
-  // Simulate an asynchronous operation
   setTimeout(() => {
-    const success = Math.random() > 0.5; // Randomly resolve or reject
+    const success = Math.random() > 0.5; 
     if (success) {
       resolve("Operation succeeded!");
     } else {
@@ -9,6 +8,7 @@ const rsolvereject = new Promise((resolve, reject) => {
     }
   }, 1000);
 });
+
 rsolvereject
   .then((message) => {
     console.log(message);
