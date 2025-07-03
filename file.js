@@ -1,64 +1,38 @@
-const newpromise = new Promise((resolve, reject) => {
-  if (5 > 9) {
-    reject("This is an error");
-  }
+const rsolvereject = new Promise((resolve, reject) => {
+  // Simulate an asynchronous operation
   setTimeout(() => {
-    resolve("Promise resolved after 2 seconds");
-  }, 2000);
+    const success = Math.random() > 0.5; // Randomly resolve or reject
+    if (success) {
+      resolve("Operation succeeded!");
+    } else {
+      reject(new Error("Operation failed!"));
+    }
+  }, 1000);
 });
-newpromise
+rsolvereject
   .then((message) => {
     console.log(message);
-    return "Chaining another promise";
+    return "This will run if the promise was resolved.";
   })
-  .then((nextMessage) => {
-    console.log(nextMessage);
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve("Final promise resolved after 1 second");
-      }, 1000);
-    });
-  })
-  .then((finalMessage) => {
-    console.log(finalMessage);
+  .then((message) => {
+    console.log(message);
   })
   .catch((error) => {
-    console.error("An error occurred:", error);
-  })
-  .finally(() => {
-    console.log("All promises have been handled.");
+    console.error("Caught an error:", error.message);
   });
-
-const asyncpromise = async () => {
+const asyncFunciton = async () => {
   try {
-    const message = await newpromise;
-    console.log("first async mesage : ", message);
-    const calculateasync = async (a, b) => {
-      try {
-        if (a > b) {
-          return new Promise((_, reject) => {
-            setTimeout(() => {
-              console.log("a is greater than b, rejecting after 1 second");
-              reject(new Error("a is greater than b"));
-            }, 1000);
-          });
-        }   
-        return a + b;
-      } catch (err) {
-        console.log(err.message);
-      }
-    };
-    console.log("calculateasync result: ", await calculateasync(15, 10));
-    const finalMessage = await new Promise((resolve) => {
-      setTimeout(() => {
-        resolve("Final promise resolved after 1 second in async function");
-      }, 1000);
+    const result = await rsolvereject.then((message) => {
+      console.log("Inside async function:", message);
+      return "This will run inside the async function.";
+    }).then((message) => {
+      console.log("Inside async function after then:", message);
+      return "Final message from async function.";
     });
-    console.log(finalMessage);
+    console.log("Result from async function:", result); 
+    
   } catch (error) {
-    console.error("An error occurred in async function:", error);
-  } finally {
-    console.log("All promises have been handled in async function.");
+    console.error("Caught an error in async function:", error.message);
   }
 };
-asyncpromise();
+asyncFunciton();
