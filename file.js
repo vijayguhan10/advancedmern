@@ -35,4 +35,4 @@ const asyncFunciton = async () => {
     console.error("Caught an error in async function:", error.message);
   }
 };
-asyncFunciton();
+// asyncFunciton();
